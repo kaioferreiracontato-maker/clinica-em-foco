@@ -1,0 +1,183 @@
+---
+import { Image } from "astro:assets";
+import Lens from "./Lens.astro";
+import foto from "../assets/photos/formato-grupo.jpg";
+
+const features = [
+  {
+    titulo: "Presencial",
+    desc: "Um dia inteiro, frente a frente, no Instituto Blu em Recife.",
+    icon: "pin",
+  },
+  {
+    titulo: "Turma reduzida",
+    desc: "Poucas vagas para participar de verdade e discutir de perto.",
+    icon: "users",
+  },
+  {
+    titulo: "Casos ao vivo",
+    desc: "Casos reais analisados e hipóteses construídas em conjunto.",
+    icon: "pulse",
+  },
+];
+---
+
+<section class="section section--ivory sobre" id="sobre">
+  <div class="container sobre__inner">
+    <header class="sobre__head reveal">
+      <p class="eyebrow">O que é este encontro</p>
+      <h2 class="sobre__title">
+        Não é palestra passiva.<br />É raciocínio clínico <em>ao vivo</em>.
+      </h2>
+      <p class="sobre__lead">
+        Você entra no modo como a clínica é pensada e conduzida, com construção
+        em conjunto e subgrupos guiados por psicólogas do Instituto Blu.
+      </p>
+    </header>
+
+    <div class="sobre__stage reveal">
+      <div class="sobre__lens" aria-hidden="true"><Lens rings={4} /></div>
+      <figure class="sobre__media">
+        <Image
+          src={foto}
+          alt="Facilitadora conduzindo a discussão de um caso clínico com um grupo reduzido no Instituto Blu"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 760px) 92vw, 680px"
+          class="sobre__img"
+        />
+      </figure>
+    </div>
+
+    <ul class="sobre__features">
+      {
+        features.map((f) => (
+          <li class="sobre__feature reveal">
+            <span class="sobre__ficon" aria-hidden="true">
+              {f.icon === "pin" && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.5-6-10a6 6 0 1 1 12 0c0 4.5-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+              )}
+              {f.icon === "users" && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 5.6a3 3 0 0 1 0 5.6"/><path d="M15.8 13.4a5.5 5.5 0 0 1 4.7 5.6"/></svg>
+              )}
+              {f.icon === "pulse" && (
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-7 5 14 2.5-7H21"/></svg>
+              )}
+            </span>
+            <h3 class="sobre__ftitle">{f.titulo}</h3>
+            <p class="sobre__fdesc">{f.desc}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sobre__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .sobre__head {
+    max-width: 44ch;
+  }
+  .sobre__title {
+    margin-top: 1.1rem;
+    font-size: var(--step-3);
+    color: var(--on-ivory);
+  }
+  .sobre__title em {
+    font-style: italic;
+    color: var(--copper);
+    white-space: nowrap;
+  }
+  .sobre__lead {
+    margin-top: 1.2rem;
+    color: var(--on-ivory-muted);
+    max-width: 52ch;
+    margin-inline: auto;
+  }
+
+  /* Imagem */
+  .sobre__stage {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  }
+  .sobre__lens {
+    position: absolute;
+    top: -9%;
+    right: -7%;
+    width: 40%;
+    height: 40%;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sobre__media {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .sobre__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 60px -28px rgba(19, 28, 48, 0.4);
+  }
+
+  /* 3 blocos flutuando como elemento final */
+  .sobre__features {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 680px;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 2;
+  }
+  @media (min-width: 46rem) {
+    .sobre__features {
+      grid-template-columns: repeat(3, 1fr);
+      width: 94%;
+      max-width: 780px;
+      margin-top: clamp(-4.5rem, -3rem - 2vw, -3rem);
+    }
+  }
+  .sobre__feature {
+    text-align: left;
+    padding: 1.15rem 1.2rem 1.25rem;
+    background: #fff;
+    border: 1px solid var(--ivory-line);
+    border-radius: var(--radius);
+    box-shadow: 0 22px 44px -20px rgba(19, 28, 48, 0.3);
+  }
+  .sobre__ficon {
+    display: grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--copper) 12%, #fff);
+    color: var(--copper);
+  }
+  .sobre__ftitle {
+    margin-top: 0.9rem;
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    color: var(--on-ivory);
+  }
+  .sobre__fdesc {
+    margin-top: 0.35rem;
+    font-size: var(--step--1);
+    line-height: 1.45;
+    color: var(--on-ivory-muted);
+  }
+</style>

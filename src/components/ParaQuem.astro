@@ -1,0 +1,92 @@
+---
+import { publicoAlvo } from "../config";
+---
+
+<section class="section section--deep" id="para-quem">
+  <div class="container">
+    <header class="pq__head reveal">
+      <p class="eyebrow">Para quem é</p>
+      <h2 class="pq__title">
+        Para quem leva a clínica a sério, da graduação ao consultório.
+      </h2>
+    </header>
+
+    <ul class="pq__grid">
+      {
+        publicoAlvo.map((p) => (
+          <li class="pq__card reveal">
+            {p.tag && <span class="pq__tag">{p.tag}</span>}
+            <h3 class="pq__card-title">{p.titulo}</h3>
+            <p class="pq__card-desc">{p.desc}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pq__head {
+    max-width: 34ch;
+  }
+  .pq__title {
+    margin-top: 1.1rem;
+    font-size: var(--step-2);
+    color: var(--on-navy-strong);
+  }
+  .pq__grid {
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(2rem, 1rem + 3vw, 3.2rem);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 38rem) {
+    .pq__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 62rem) {
+    .pq__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .pq__card {
+    position: relative;
+    padding: 1.5rem 1.4rem;
+    border: 1px solid var(--navy-line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.015);
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .pq__card:hover {
+    border-color: var(--copper-soft);
+    background: rgba(255, 255, 255, 0.035);
+  }
+  .pq__tag {
+    display: inline-block;
+    margin-bottom: 0.7rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--copper-strong);
+    padding: 0.3em 0.7em;
+    border-radius: var(--radius-pill);
+  }
+  .pq__card:has(.pq__tag) {
+    border-color: color-mix(in srgb, var(--copper) 40%, var(--navy-line));
+  }
+  .pq__card-title {
+    font-size: var(--step-1);
+    color: var(--on-navy-strong);
+  }
+  .pq__card-desc {
+    margin-top: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--on-navy);
+    line-height: 1.55;
+  }
+</style>

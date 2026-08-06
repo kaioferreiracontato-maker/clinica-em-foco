@@ -1,0 +1,84 @@
+---
+/**
+ * Lente concêntrica — o motivo/assinatura da marca ("em Foco").
+ * Puramente decorativa. Posicione/dimensione via CSS no pai.
+ * `animated` liga a respiração dos anéis (CSS puro, respeita reduced-motion).
+ */
+interface Props {
+  class?: string;
+  rings?: number;
+  animated?: boolean;
+}
+const { class: className = "", rings = 4, animated = false } = Astro.props;
+const items = Array.from({ length: rings });
+---
+
+<svg
+  class={`lens ${animated ? "is-animated" : ""} ${className}`}
+  viewBox="0 0 200 200"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    items.map((_, i) => {
+      const r = 96 - i * (78 / rings);
+      const op = (0.5 - i * (0.32 / rings)).toFixed(3);
+      return <circle cx="100" cy="100" r={r} style={`--i:${i};--o:${op}`} />;
+    })
+  }
+  <circle cx="100" cy="100" r="7" class="lens__core" style="--i:0;--o:0.9" />
+</svg>
+
+<style>
+  .lens {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .lens circle {
+    fill: none;
+    stroke: var(--copper-soft);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    opacity: var(--o);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .lens__core {
+    fill: var(--copper);
+    stroke: none !important;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lens.is-animated circle {
+      animation: lens-breathe 7s ease-in-out infinite;
+      animation-delay: calc(var(--i) * -0.9s);
+    }
+    .lens.is-animated .lens__core {
+      animation: lens-core 7s ease-in-out infinite;
+    }
+  }
+
+  @keyframes lens-breathe {
+    0%,
+    100% {
+      transform: scale(0.955);
+      opacity: calc(var(--o) * 0.5);
+    }
+    50% {
+      transform: scale(1.055);
+      opacity: calc(var(--o) * 1.3);
+    }
+  }
+  @keyframes lens-core {
+    0%,
+    100% {
+      transform: scale(0.85);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 1;
+    }
+  }
+</style>

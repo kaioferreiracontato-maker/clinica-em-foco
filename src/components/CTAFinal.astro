@@ -1,0 +1,85 @@
+---
+import { evento, cta, contato, whatsappLink } from "../config";
+import Lens from "./Lens.astro";
+---
+
+<section class="section cta-final" id="cta">
+  <div class="cta-final__lens" aria-hidden="true"><Lens rings={6} animated /></div>
+  <div class="container cta-final__inner reveal">
+    <p class="eyebrow">{evento.selos[0]}</p>
+    <h2 class="cta-final__title">
+      A clínica pede <em>nitidez</em>. Reserve seu lugar.
+    </h2>
+    <p class="cta-final__sub">
+      {evento.data} · {evento.horario} · {evento.local.nome}, {evento.local.cidade}.
+      {evento.selos[1]}.
+    </p>
+
+    <div class="cta-final__actions">
+      <a href={cta.href} class="btn">
+        {cta.label}
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a href={whatsappLink()} class="btn btn--ghost" target="_blank" rel="noopener">
+        Falar no WhatsApp
+      </a>
+    </div>
+    <p class="cta-final__contato">
+      Dúvidas? WhatsApp {contato.whatsappLabel}
+    </p>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background:
+      radial-gradient(90% 120% at 50% 120%, rgba(192, 106, 63, 0.22), transparent 60%),
+      linear-gradient(180deg, var(--navy-deep), var(--navy));
+  }
+  .cta-final__lens {
+    position: absolute;
+    left: 50%;
+    bottom: -55%;
+    width: min(120vw, 900px);
+    height: min(120vw, 900px);
+    transform: translateX(-50%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .cta-final__inner {
+    position: relative;
+    max-width: 44rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .cta-final__title {
+    margin-top: 1.1rem;
+    font-size: var(--step-4);
+    color: var(--on-navy-strong);
+  }
+  .cta-final__title em {
+    font-style: italic;
+    color: var(--copper-soft);
+  }
+  .cta-final__sub {
+    margin-top: 1.2rem;
+    max-width: 46ch;
+    color: var(--on-navy);
+  }
+  .cta-final__actions {
+    margin-top: 2.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  .cta-final__contato {
+    margin-top: 1.4rem;
+    font-size: var(--step--1);
+    color: var(--on-navy-dim);
+  }
+</style>

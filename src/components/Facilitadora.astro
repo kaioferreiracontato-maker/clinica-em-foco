@@ -1,0 +1,147 @@
+---
+import { Image } from "astro:assets";
+import { facilitadora } from "../config";
+import retrato from "../assets/photos/facilitadora-a.jpg";
+---
+
+<section class="section section--navy fac" id="facilitacao">
+  <div class="container fac__grid">
+    <figure class="fac__media reveal">
+      <Image
+        src={retrato}
+        alt={`Retrato de ${facilitadora.nome}`}
+        widths={[420, 640, 840]}
+        sizes="(max-width: 900px) 72vw, 380px"
+        class="fac__img"
+      />
+      <figcaption class="fac__stat">
+        <span class="fac__stat-num">{facilitadora.stat.num}</span>
+        <span class="fac__stat-label">{facilitadora.stat.label}</span>
+      </figcaption>
+    </figure>
+
+    <div class="fac__copy">
+      <p class="eyebrow reveal">Quem conduz</p>
+      <h2 class="fac__nome reveal">{facilitadora.nome}</h2>
+      <p class="fac__titulo reveal">
+        {facilitadora.titulo}
+        <span class="fac__reg">{facilitadora.registro}</span>
+      </p>
+
+      <ul class="fac__chips reveal">
+        {facilitadora.credenciais.map((c) => <li>{c}</li>)}
+      </ul>
+
+      <p class="fac__resumo reveal">{facilitadora.resumo}</p>
+
+      <blockquote class="fac__quote reveal">{facilitadora.quote}</blockquote>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fac__grid {
+    display: grid;
+    gap: clamp(2rem, 1rem + 5vw, 4.5rem);
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 56rem) {
+    .fac__grid {
+      grid-template-columns: 0.82fr 1.18fr;
+    }
+  }
+  .fac__media {
+    position: relative;
+    margin: 0;
+    max-width: 400px;
+  }
+  .fac__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.65);
+  }
+  .fac__stat {
+    position: absolute;
+    right: -0.8rem;
+    bottom: -0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    border-radius: var(--radius);
+    background: var(--copper-strong);
+    box-shadow: 0 18px 30px -14px rgba(0, 0, 0, 0.6);
+  }
+  .fac__stat-num {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    line-height: 1;
+    color: #fff;
+  }
+  .fac__stat-label {
+    margin-top: 0.15rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 8ch;
+    text-align: center;
+  }
+  .fac__nome {
+    margin-top: 1rem;
+    font-size: var(--step-4);
+    color: var(--on-navy-strong);
+  }
+  .fac__titulo {
+    margin-top: 0.5rem;
+    font-size: var(--step-1);
+    color: var(--copper-soft);
+  }
+  .fac__reg {
+    margin-left: 0.6rem;
+    font-family: var(--font-sans);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-navy-dim);
+    white-space: nowrap;
+  }
+  .fac__chips {
+    list-style: none;
+    padding: 0;
+    margin: 1.6rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .fac__chips li {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--on-navy-strong);
+    padding: 0.45em 0.95em;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--navy-line);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .fac__resumo {
+    margin-top: 1.5rem;
+    max-width: 52ch;
+    color: var(--on-navy);
+  }
+  .fac__quote {
+    margin: 1.8rem 0 0;
+    padding-left: 1.3rem;
+    border-left: 3px solid var(--copper);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--step-2);
+    line-height: 1.35;
+    color: var(--on-navy-strong);
+    max-width: 52ch;
+    text-wrap: balance;
+  }
+</style>

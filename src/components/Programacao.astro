@@ -1,0 +1,187 @@
+---
+import { programacao, evento, cta } from "../config";
+
+const periodos = [
+  { nome: "Manhã", blocos: programacao.manha },
+  { nome: "Tarde", blocos: programacao.tarde },
+];
+---
+
+<section class="section section--ivory" id="programacao">
+  <div class="container">
+    <header class="prog__head reveal">
+      <p class="eyebrow">Programação</p>
+      <h2 class="prog__title">Um percurso do raciocínio à síntese clínica.</h2>
+      <p class="prog__sub">{evento.data} · {evento.horario} · {evento.local.nome}</p>
+    </header>
+
+    <div class="prog__grid">
+      {
+        periodos.map((p) => (
+          <div class="prog__periodo reveal">
+            <h3 class="prog__periodo-nome">{p.nome}</h3>
+            <ol class="prog__list">
+              {p.blocos.map((b) => (
+                <li class={`prog__item${b.pausa ? " prog__item--pausa" : ""}`}>
+                  <div class="prog__marker" aria-hidden="true">
+                    <span class="prog__ring" />
+                  </div>
+                  <div class="prog__body">
+                    <p class="prog__hora">{b.hora}</p>
+                    <h4 class="prog__nome">{b.titulo}</h4>
+                    {b.itens.length > 0 && (
+                      <ul class="prog__itens">
+                        {b.itens.map((it) => (
+                          <li>{it}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="prog__cta reveal">
+      <a href={cta.href} class="btn">
+        {cta.label}
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .prog__head {
+    max-width: 46ch;
+  }
+  .prog__title {
+    margin-top: 1.1rem;
+    font-size: var(--step-3);
+    color: var(--on-ivory);
+  }
+  .prog__sub {
+    margin-top: 0.9rem;
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-ivory-muted);
+  }
+  .prog__grid {
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    display: grid;
+    gap: clamp(2.5rem, 1rem + 5vw, 4.5rem);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 58rem) {
+    .prog__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .prog__periodo-nome {
+    font-size: var(--step-2);
+    color: var(--copper);
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--ivory-line);
+  }
+  .prog__list {
+    list-style: none;
+    padding: 0;
+    margin: 1.6rem 0 0;
+  }
+  .prog__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 1rem;
+    padding-bottom: 1.9rem;
+  }
+  /* linha vertical conectando os marcadores */
+  .prog__item::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 22px;
+    bottom: -4px;
+    width: 1px;
+    background: var(--ivory-line);
+  }
+  .prog__item:last-child::before {
+    display: none;
+  }
+  .prog__item:last-child {
+    padding-bottom: 0;
+  }
+  .prog__marker {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    margin-top: 2px;
+  }
+  .prog__ring {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid var(--copper);
+    background: var(--ivory);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--copper) 12%, transparent);
+  }
+  .prog__hora {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    color: var(--copper);
+  }
+  .prog__nome {
+    margin-top: 0.15rem;
+    font-size: var(--step-1);
+    color: var(--on-ivory);
+    line-height: 1.15;
+  }
+  .prog__itens {
+    margin: 0.7rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .prog__itens li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: var(--step--1);
+    color: var(--on-ivory-muted);
+    line-height: 1.5;
+  }
+  .prog__itens li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--copper-soft);
+  }
+  /* pausas: mais discretas */
+  .prog__item--pausa .prog__nome {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--step-0);
+    color: var(--on-ivory-muted);
+  }
+  .prog__item--pausa .prog__ring {
+    border-color: var(--ivory-line);
+    box-shadow: none;
+  }
+  .prog__cta {
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    display: flex;
+    justify-content: center;
+  }
+</style>

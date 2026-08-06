@@ -1,0 +1,118 @@
+---
+import { Image } from "astro:assets";
+import { cta } from "../config";
+import lockup from "../assets/brand/instituto-blu-lockup-white.png";
+
+const links = [
+  { href: "#sobre", label: "O encontro" },
+  { href: "#programacao", label: "Programação" },
+  { href: "#facilitacao", label: "Facilitadora" },
+  { href: "#inscricao", label: "Inscrição" },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="nav__pill">
+    <a href="#top" class="nav__brand" aria-label="Instituto Blu, ir para o início">
+      <Image
+        src={lockup}
+        alt="Instituto Blu"
+        widths={[120, 240]}
+        sizes="120px"
+        loading="eager"
+        class="nav__logo"
+      />
+    </a>
+
+    <nav class="nav__links" aria-label="Seções">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <a href={cta.href} class="btn nav__cta" data-nav-cta>
+      {cta.labelCurto}
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    padding: clamp(0.6rem, 0.3rem + 1vw, 1rem) var(--pad-x);
+    pointer-events: none;
+  }
+  .nav__pill {
+    pointer-events: auto;
+    max-width: var(--container);
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.6rem 0.5rem 1.1rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--navy-deep) 55%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    transition: background-color 0.3s var(--ease-out), border-color 0.3s var(--ease-out),
+      box-shadow 0.3s var(--ease-out);
+  }
+  .nav.is-scrolled .nav__pill {
+    background: color-mix(in srgb, var(--navy-deep) 86%, transparent);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 14px 34px -20px rgba(0, 0, 0, 0.8);
+  }
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+  }
+  .nav__logo {
+    width: auto;
+    height: 26px;
+  }
+  .nav__links {
+    display: none;
+    gap: 1.6rem;
+    margin-inline: auto;
+  }
+  .nav__links a {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--on-navy);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-out);
+  }
+  .nav__links a:hover {
+    color: var(--on-navy-strong);
+  }
+  @media (min-width: 60rem) {
+    .nav__links {
+      display: flex;
+    }
+  }
+
+  /* CTA aparece ao rolar */
+  .nav__cta {
+    flex: none;
+    padding: 0.5em 1.1em;
+    min-height: 40px;
+    opacity: 0;
+    transform: translateX(8px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.28s var(--ease-out), transform 0.28s var(--ease-out);
+  }
+  .nav.is-scrolled .nav__cta {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav__cta {
+      transform: none;
+    }
+  }
+</style>

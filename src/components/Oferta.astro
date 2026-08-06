@@ -1,0 +1,205 @@
+---
+import { investimento, cta, evento } from "../config";
+import Lens from "./Lens.astro";
+---
+
+<section class="section section--navy" id="inscricao">
+  <div class="container oferta">
+    <div class="oferta__intro reveal">
+      <p class="eyebrow">Inscrição</p>
+      <h2 class="oferta__title">Garanta sua vaga no Clínica em Foco.</h2>
+      <p class="oferta__lead">
+        {evento.data} · {evento.horario} · {evento.local.nome}, {evento.local.cidade}.
+        {evento.selos[0]}.
+      </p>
+
+      <ul class="oferta__incluso">
+        {
+          investimento.incluso.map((i) => (
+            <li>
+              <span class="oferta__check" aria-hidden="true">✓</span>
+              {i}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="oferta__card reveal">
+      <div class="oferta__lens" aria-hidden="true"><Lens rings={4} animated /></div>
+      <div class="oferta__card-inner">
+        <p class="oferta__chamada">{investimento.chamada}</p>
+        <p class="oferta__vista">{investimento.aVista}</p>
+        <p class="oferta__parcelado">{investimento.parcelado}</p>
+
+        {
+          investimento.meia?.exibir && (
+            <div class="oferta__meia">
+              <span class="oferta__meia-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>
+              </span>
+              <div class="oferta__meia-body">
+                <p class="oferta__meia-title">
+                  Meia-entrada para estudantes
+                </p>
+                <p class="oferta__meia-val">
+                  {investimento.meia.valor}
+                  <span class="oferta__meia-obs">{investimento.meia.obs}</span>
+                </p>
+              </div>
+            </div>
+          )
+        }
+
+        <a href={cta.href} class="btn oferta__btn">
+          {cta.label}
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="oferta__obs">{investimento.observacao}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .oferta {
+    display: grid;
+    gap: clamp(2rem, 1rem + 4vw, 3.5rem);
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 56rem) {
+    .oferta {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+  }
+  .oferta__title {
+    margin-top: 1.1rem;
+    font-size: var(--step-3);
+    color: var(--on-navy-strong);
+  }
+  .oferta__lead {
+    margin-top: 1rem;
+    color: var(--on-navy);
+    max-width: 46ch;
+  }
+  .oferta__incluso {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.8rem;
+    display: grid;
+    gap: 0.7rem;
+    max-width: 40ch;
+  }
+  .oferta__incluso li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--on-navy-strong);
+  }
+  .oferta__check {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--copper) 22%, transparent);
+    color: var(--copper-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .oferta__card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--navy-line);
+    background:
+      radial-gradient(120% 80% at 85% 0%, rgba(206, 147, 117, 0.16), transparent 55%),
+      linear-gradient(180deg, var(--navy-card), var(--navy-deep));
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  }
+  .oferta__lens {
+    position: absolute;
+    top: -30%;
+    right: -22%;
+    width: 70%;
+    height: 70%;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .oferta__card-inner {
+    position: relative;
+    padding: clamp(1.8rem, 1rem + 3vw, 2.8rem);
+  }
+  .oferta__chamada {
+    font-size: var(--step--1);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    font-weight: 600;
+  }
+  .oferta__vista {
+    margin-top: 0.5rem;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: var(--step-5);
+    line-height: 1;
+    color: var(--on-navy-strong);
+  }
+  .oferta__parcelado {
+    margin-top: 0.4rem;
+    font-size: var(--step-0);
+    color: var(--on-navy);
+  }
+  .oferta__meia {
+    margin-top: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--copper) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--copper) 35%, transparent);
+  }
+  .oferta__meia-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 10px;
+    background: var(--copper-strong);
+    color: #fff;
+  }
+  .oferta__meia-title {
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--on-navy-strong);
+  }
+  .oferta__meia-val {
+    margin-top: 0.1rem;
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    color: var(--copper-soft);
+  }
+  .oferta__meia-obs {
+    display: block;
+    margin-top: 0.15rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--on-navy-dim);
+  }
+  .oferta__btn {
+    margin-top: 1.6rem;
+    width: 100%;
+  }
+  .oferta__obs {
+    margin-top: 1rem;
+    font-size: var(--step--1);
+    color: var(--on-navy-dim);
+    text-align: center;
+  }
+</style>

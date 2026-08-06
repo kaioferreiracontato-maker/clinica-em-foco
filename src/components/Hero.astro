@@ -1,0 +1,242 @@
+---
+import { Image } from "astro:assets";
+import { cta } from "../config";
+import Lens from "./Lens.astro";
+import wordmark from "../assets/brand/clinica-em-foco-white.png";
+---
+
+<section class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__lens" data-parallax><Lens rings={5} animated /></div>
+    <div class="hero__float hero__float--1"><Lens rings={3} animated /></div>
+    <div class="hero__float hero__float--2"><Lens rings={3} animated /></div>
+    <div class="hero__glow"></div>
+    <div class="hero__grain"></div>
+  </div>
+
+  <div class="container hero__inner">
+    <span class="hero__kicker hero-anim" style="--d:0s">
+      <Image
+        src={wordmark}
+        alt="Clínica em Foco"
+        widths={[220, 340]}
+        sizes="180px"
+        loading="eager"
+        fetchpriority="high"
+        class="hero__wordmark"
+      />
+    </span>
+
+    <h1 class="hero__theme hero-anim" style="--d:0.09s">
+      Psicopatologia
+      <em>na Prática Clínica</em>
+    </h1>
+
+    <p class="hero__lead hero-anim" style="--d:0.18s">
+      Aprenda a identificar, compreender e aplicar os conceitos da psicopatologia
+      no dia a dia da clínica.
+    </p>
+
+    <div class="hero__actions hero-anim" style="--d:0.28s">
+      <a href={cta.href} class="btn">
+        {cta.label}
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#programacao" class="btn btn--ghost">Ver programação</a>
+    </div>
+  </div>
+
+  <a href="#sobre" class="hero__scroll" aria-label="Rolar para saber mais">
+    <span></span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--grad-navy);
+    min-height: min(92svh, 820px);
+    display: grid;
+    align-items: center;
+    padding-block: clamp(6rem, 4rem + 8vw, 9rem) clamp(4rem, 2rem + 5vw, 6rem);
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .hero__lens {
+    position: absolute;
+    top: -32%;
+    right: -14%;
+    width: min(72vw, 640px);
+    height: min(72vw, 640px);
+  }
+  .hero__float {
+    position: absolute;
+    opacity: 0.55;
+  }
+  .hero__float--1 {
+    top: 16%;
+    left: -6%;
+    width: 220px;
+    height: 220px;
+  }
+  .hero__float--2 {
+    bottom: -6%;
+    left: 30%;
+    width: 150px;
+    height: 150px;
+    opacity: 0.4;
+  }
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background: var(--grad-glow);
+  }
+  .hero__grain {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.5) 0.5px, transparent 0.6px);
+    background-size: 4px 4px;
+    mix-blend-mode: overlay;
+    opacity: 0.05;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero__kicker {
+    display: inline-flex;
+    opacity: 0.92;
+  }
+  .hero__wordmark {
+    width: auto;
+    height: clamp(28px, 2vw + 20px, 38px);
+  }
+  .hero__theme {
+    margin-top: 1.5rem;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 1.4rem + 4.4vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--on-navy-strong);
+  }
+  .hero__theme em {
+    display: block;
+    font-style: italic;
+    background: linear-gradient(100deg, var(--copper-soft) 0%, var(--copper) 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero__lead {
+    margin-top: 1.5rem;
+    max-width: 46ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--on-navy);
+  }
+  .hero__actions {
+    margin-top: 2.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+  }
+
+  /* Indicador de rolagem */
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.4rem;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 38px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    display: grid;
+    place-items: start center;
+    padding-top: 7px;
+    z-index: 1;
+  }
+  .hero__scroll span {
+    width: 3px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--copper-soft);
+  }
+
+  /* Entrada do hero em CSS puro — instantânea, sem depender do JS/GSAP */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-anim {
+      animation: hero-in 0.9s var(--ease-out) both;
+      animation-delay: var(--d, 0s);
+    }
+    .hero__float--1 {
+      animation: drift-1 19s ease-in-out infinite;
+    }
+    .hero__float--2 {
+      animation: drift-2 24s ease-in-out infinite;
+    }
+    .hero__scroll span {
+      animation: scroll-hint 1.8s var(--ease-in-out) infinite;
+    }
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes drift-1 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(16px, -20px);
+    }
+  }
+  @keyframes drift-2 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-18px, 14px);
+    }
+  }
+  @keyframes scroll-hint {
+    0% {
+      opacity: 0;
+      transform: translateY(-3px);
+    }
+    40% {
+      opacity: 1;
+    }
+    80%,
+    100% {
+      opacity: 0;
+      transform: translateY(7px);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .hero__lead {
+      font-size: var(--step-0);
+    }
+  }
+</style>

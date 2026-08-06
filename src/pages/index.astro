@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import Problema from "../components/Problema.astro";
+import Sobre from "../components/Sobre.astro";
+import Facilitadora from "../components/Facilitadora.astro";
+import ProvaSocial from "../components/ProvaSocial.astro";
+import Ganhos from "../components/Ganhos.astro";
+import Programacao from "../components/Programacao.astro";
+import ParaQuem from "../components/ParaQuem.astro";
+import Oferta from "../components/Oferta.astro";
+import Local from "../components/Local.astro";
+import CTAFinal from "../components/CTAFinal.astro";
+import Footer from "../components/Footer.astro";
+import { facilitadora, depoimentos, investimento } from "../config";
+---
+
+<Layout>
+  <Header />
+  <main>
+    <Hero />
+    <Marquee />
+    <Problema />
+    <Sobre />
+    <Ganhos />
+    {facilitadora.exibir && <Facilitadora />}
+    {depoimentos.exibir && <ProvaSocial />}
+    <Programacao />
+    <ParaQuem />
+    {investimento.exibir && <Oferta />}
+    <Local />
+    <CTAFinal />
+  </main>
+  <Footer />
+</Layout>

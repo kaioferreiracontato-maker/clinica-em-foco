@@ -1,0 +1,84 @@
+---
+import "../styles/global.css";
+import { seo, evento } from "../config";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = seo.title, description = seo.description } = Astro.props;
+
+// Só emite canonical/OG absolutos quando `site` estiver definido no astro.config.
+const canonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : undefined;
+const ogImage = Astro.site
+  ? new URL(seo.ogImage, Astro.site).toString()
+  : undefined;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#1b2742" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Anti-flash: só escondemos elementos para animar quando há JS e sem reduced-motion.
+         O failsafe revela tudo se o motion.ts não rodar (erro/timeout). -->
+    <script is:inline>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var root = document.documentElement;
+        root.classList.add("anim");
+        window.__revealFailsafe = setTimeout(function () {
+          root.classList.remove("anim");
+        }, 2500);
+      }
+    </script>
+
+    <!-- Fontes críticas -->
+    <link
+      rel="preload"
+      href="/fonts/manrope-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/fraunces-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={evento.organizador} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="pt_BR" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta
+      name="twitter:card"
+      content={ogImage ? "summary_large_image" : "summary"}
+    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+  </head>
+  <body>
+    <slot />
+    <script>
+      import "../scripts/motion.ts";
+    </script>
+  </body>
+</html>

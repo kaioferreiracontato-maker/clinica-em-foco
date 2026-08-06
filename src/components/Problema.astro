@@ -1,0 +1,56 @@
+---
+import { evento } from "../config";
+const [frase1, frase2] = evento.conceito.split(". ");
+---
+
+<section class="section section--deep problema">
+  <div class="container container-narrow problema__inner reveal">
+    <p class="eyebrow">O que trava o profissional</p>
+    <p class="problema__frase">
+      {frase1}.<br /><em>{frase2}</em>
+    </p>
+    <p class="problema__texto">
+      Na faculdade, nas especializações e no próprio DSM, fala-se muito sobre os
+      transtornos. Mas, na hora de fechar um diagnóstico ou conduzir um caso real,
+      aparecem desafios que os manuais não cobrem. É aí que o profissional trava,
+      sobretudo o mais novo.
+    </p>
+    <p class="problema__texto">
+      O Clínica em Foco existe para isso: desenvolver o pensamento clínico,
+      construir e revisar hipóteses, lidar com os vieses e a tomada de decisão
+      diante da complexidade.
+    </p>
+  </div>
+</section>
+
+<style>
+  .problema {
+    text-align: center;
+  }
+  .problema__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .problema__frase {
+    margin-top: 1.4rem;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: var(--step-4);
+    line-height: 1.12;
+    color: var(--on-navy-strong);
+    text-wrap: balance;
+  }
+  .problema__frase em {
+    font-style: italic;
+    color: var(--copper-soft);
+  }
+  .problema__texto {
+    margin-top: 1.6rem;
+    max-width: 56ch;
+    color: var(--on-navy);
+  }
+  .problema__texto:first-of-type {
+    margin-top: 2.2rem;
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import { evento, contato, whatsappLink } from "../config";
+import lockup from "../assets/brand/instituto-blu-lockup-white.png";
+
+const year = 2026;
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <Image
+        src={lockup}
+        alt="Instituto Blu"
+        widths={[160, 320]}
+        sizes="160px"
+        class="footer__logo"
+      />
+      <p class="footer__tag">
+        Um encontro para olhar a clínica com mais profundidade.
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Contato">
+      <h2 class="footer__h">Contato</h2>
+      <a href={whatsappLink()} target="_blank" rel="noopener">
+        WhatsApp · {contato.whatsappLabel}
+      </a>
+      <a href={contato.instagramUrl} target="_blank" rel="noopener">
+        Instagram · @{contato.instagram}
+      </a>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__h">Local</h2>
+      <p>
+        {evento.local.nome} · {evento.local.predio}<br />
+        {evento.local.endereco}<br />
+        {evento.local.complemento} · {evento.local.cidade}
+      </p>
+    </div>
+  </div>
+
+  <div class="container footer__base">
+    <p>© {year} {evento.organizador} · {evento.nome}</p>
+    <p>{evento.subtitulo}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy-deep);
+    color: var(--on-navy);
+    padding-block: clamp(3rem, 2rem + 3vw, 4.5rem) 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .footer__inner {
+    display: grid;
+    gap: 2.4rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 48rem) {
+    .footer__inner {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+  .footer__logo {
+    width: auto;
+    height: 34px;
+  }
+  .footer__tag {
+    margin-top: 1rem;
+    max-width: 32ch;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--on-navy);
+  }
+  .footer__h {
+    font-family: var(--font-sans);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 1rem;
+  }
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: var(--step--1);
+  }
+  .footer__col a {
+    color: var(--on-navy-strong);
+    text-decoration: none;
+    transition: color 0.2s var(--ease);
+  }
+  .footer__col a:hover {
+    color: var(--copper-soft);
+  }
+  .footer__col p {
+    line-height: 1.6;
+  }
+  .footer__base {
+    margin-top: 2.6rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-size: var(--step--1);
+    color: var(--on-navy-dim);
+  }
+</style>

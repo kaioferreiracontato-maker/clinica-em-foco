@@ -1,0 +1,179 @@
+---
+import { evento, cta } from "../config";
+
+const { local } = evento;
+---
+
+<section class="section section--ivory local" id="local">
+  <div class="container local__grid">
+    <div class="local__intro reveal">
+      <p class="eyebrow">Onde e quando</p>
+      <h2 class="local__title">Um dia inteiro,<br />presencial em Recife.</h2>
+      <p class="local__desc">
+        Reserve a data e programe a chegada. O encontro acontece no Instituto Blu,
+        no Empresarial RioMar.
+      </p>
+      <a href={cta.href} class="btn local__cta">
+        {cta.label}
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="local__cards">
+      <div class="local__card reveal">
+        <span class="local__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
+        </span>
+        <h3 class="local__card-title">Data e horário</h3>
+        <p class="local__card-text">
+          {evento.diaSemana}, {evento.data}<br />
+          <strong>{evento.horario}</strong> · {evento.formato}
+        </p>
+      </div>
+
+      <div class="local__card reveal">
+        <span class="local__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.5-6-10a6 6 0 1 1 12 0c0 4.5-6 10-6 10z"/><circle cx="12" cy="11" r="2.4"/></svg>
+        </span>
+        <h3 class="local__card-title">Local</h3>
+        <p class="local__card-text">
+          <strong>{local.nome}</strong> · {local.predio}<br />
+          {local.endereco}<br />
+          {local.complemento}<br />
+          {local.cidade}
+        </p>
+      </div>
+
+      <a
+        href={local.mapa}
+        target="_blank"
+        rel="noopener"
+        class="local__card local__card--map reveal"
+        aria-label="Abrir o endereço no Google Maps"
+      >
+        <span class="local__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m9 4 6 2 5-2v14l-5 2-6-2-5 2V6z"/><path d="M9 4v14M15 6v14"/></svg>
+        </span>
+        <h3 class="local__card-title">Como chegar</h3>
+        <p class="local__card-text">Abra a rota até o Empresarial RioMar, no Pina.</p>
+        <span class="local__go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .local__grid {
+    display: grid;
+    gap: clamp(2rem, 1rem + 4vw, 3.5rem);
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  @media (min-width: 60rem) {
+    .local__grid {
+      grid-template-columns: 0.85fr 2fr;
+    }
+  }
+  .local__title {
+    margin-top: 1.1rem;
+    font-size: var(--step-3);
+    color: var(--on-ivory);
+  }
+  .local__desc {
+    margin-top: 1.1rem;
+    color: var(--on-ivory-muted);
+    max-width: 40ch;
+  }
+  .local__cta {
+    margin-top: 1.8rem;
+  }
+
+  .local__cards {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 40rem) {
+    .local__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .local__card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 1.5rem 1.4rem 1.6rem;
+    background: var(--ivory-card);
+    border: 1px solid var(--ivory-line);
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out),
+      box-shadow 0.3s var(--ease-out);
+  }
+  .local__icon {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--copper) 12%, #fff);
+    color: var(--copper);
+    border: 1px solid color-mix(in srgb, var(--copper) 20%, transparent);
+  }
+  .local__card-title {
+    margin-top: 1.1rem;
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    color: var(--on-ivory);
+  }
+  .local__card-text {
+    margin-top: 0.5rem;
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--on-ivory-muted);
+  }
+  .local__card-text strong {
+    color: var(--on-ivory);
+  }
+
+  /* Card do mapa: clicável, com seta e leve textura de mapa */
+  .local__card--map {
+    background:
+      linear-gradient(color-mix(in srgb, var(--copper) 5%, var(--ivory-card)), var(--ivory-card)),
+      repeating-linear-gradient(0deg, transparent 0 22px, rgba(27, 39, 66, 0.04) 22px 23px),
+      repeating-linear-gradient(90deg, transparent 0 22px, rgba(27, 39, 66, 0.04) 22px 23px);
+    border-color: color-mix(in srgb, var(--copper) 32%, var(--ivory-line));
+    padding-bottom: 3.6rem;
+  }
+  .local__go {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    display: grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    background: var(--copper-strong);
+    color: #fff;
+    transition: transform 0.2s var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .local__card--map:hover {
+      transform: translateY(-3px);
+      border-color: var(--copper);
+      box-shadow: 0 20px 40px -22px rgba(19, 28, 48, 0.35);
+    }
+    .local__card--map:hover .local__go {
+      transform: translateX(3px);
+    }
+  }
+  .local__card--map:active {
+    transform: scale(0.99);
+  }
+</style>
