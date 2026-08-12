@@ -66,7 +66,18 @@ const ogImage = Astro.site
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="pt_BR" />
     {canonical && <meta property="og:url" content={canonical} />}
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    {
+      ogImage && (
+        <>
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:secure_url" content={ogImage} />
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={`${evento.nome} · ${evento.subtitulo}`} />
+        </>
+      )
+    }
     <meta
       name="twitter:card"
       content={ogImage ? "summary_large_image" : "summary"}
