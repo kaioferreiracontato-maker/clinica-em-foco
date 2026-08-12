@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { seo, evento } from "../config";
+import { seo, evento, tracking } from "../config";
 
 interface Props {
   title?: string;
@@ -74,11 +74,43 @@ const ogImage = Astro.site
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <!-- Google Tag Manager: só injeta quando há container configurado (ver TRACKING.md). -->
+    {
+      tracking.gtmId && (
+        <script is:inline define:vars={{ gtmId: tracking.gtmId }}>
+          (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+            var f = d.getElementsByTagName(s)[0],
+              j = d.createElement(s),
+              dl = l != "dataLayer" ? "&l=" + l : "";
+            j.async = true;
+            j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+            f.parentNode.insertBefore(j, f);
+          })(window, document, "script", "dataLayer", gtmId);
+        </script>
+      )
+    }
   </head>
   <body>
+    {
+      tracking.gtmId && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${tracking.gtmId}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+            title="Google Tag Manager"
+          />
+        </noscript>
+      )
+    }
     <slot />
     <script>
       import "../scripts/motion.ts";
+      import "../scripts/tracking.ts";
     </script>
   </body>
 </html>

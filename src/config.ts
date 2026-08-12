@@ -216,6 +216,17 @@ export const seo = {
   ogImage: "/og.jpg",
 };
 
+/**
+ * Tracking (GTM + dataLayer). Ver TRACKING.md.
+ * A página nunca chama fbq/gtag direto: só empurra dataLayer, o GTM decide o resto.
+ * Com `gtmId` vazio nada é injetado (dev/preview limpos).
+ */
+export const tracking = {
+  gtmId: "GTM-MZ685HWB",
+  /** Percentuais de rolagem que geram evento `scroll_depth`. */
+  scrollDepth: [25, 50, 75, 90],
+};
+
 export function whatsappLink() {
   return `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(contato.whatsappMsg)}`;
 }
