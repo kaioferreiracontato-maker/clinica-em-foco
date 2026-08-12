@@ -70,7 +70,7 @@ export const facilitadora = {
   registro: "CRP 02/12687",
   quote:
     "Conhecer critérios diagnósticos é indispensável. Mas é o raciocínio clínico que transforma informação em decisão clínica segura.",
-  stat: { num: "10+", label: "anos de prática clínica" },
+  stat: { num: "21+", label: "anos de prática clínica" },
   credenciais: [
     "Neuropsicologia",
     "TCC · DBT",
