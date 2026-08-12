@@ -84,7 +84,7 @@ export const facilitadora = {
 /** Prova social — depoimentos de quem já foi orientado pela Kalina.
  *  ⚠ TROCAR pelos depoimentos reais (2 a 3), com nome e formação de quem fala. */
 export const depoimentos = {
-  exibir: true,
+  exibir: false, // seção removida a pedido; religar quando houver depoimentos reais
   itens: [
     {
       texto:
