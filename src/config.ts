@@ -211,8 +211,8 @@ export const seo = {
   title: "Clínica em Foco · Psicopatologia na Prática Clínica | Instituto Blu",
   description:
     "Encontro presencial em Recife para desenvolver o raciocínio clínico, a observação e a decisão baseada em evidências diante de casos complexos. Com Kalina Santana. 26 de setembro, 9h às 17h. Vagas limitadas.",
-  // Domínio de produção (sincronizado com astro.config.mjs). Trocar por domínio próprio quando houver.
-  site: "https://clinica-em-foco-ten.vercel.app",
+  // Domínio de produção (sincronizado com astro.config.mjs).
+  site: "https://clinicaemfoco.institutoblu.com.br",
   ogImage: "/og.jpg",
 };
 
