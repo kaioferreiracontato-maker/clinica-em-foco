@@ -8,8 +8,17 @@
  *   cta_click       clique em CTA interno (âncora) marcado com data-track
  *   outbound_click  clique em link externo genérico (mapa, Instagram)
  *   scroll_depth    25/50/75/90 por cento da página
+ *
+ * Também repassa as UTMs da URL para os links do checkout, para a origem da
+ * campanha chegar no relatório do Sympla (a inscrição acontece lá, fora do pixel).
  */
 import { tracking } from "../config";
+
+/** Domínio do checkout externo. Trocar se a inscrição mudar de plataforma. */
+const CHECKOUT_HOST = "sympla.com.br";
+
+/** Parâmetros repassados ao checkout. Prefixo `utm_` entra automaticamente. */
+const FORWARD_PARAMS = ["placement", "fbclid", "gclid", "ttclid"];
 
 type Payload = Record<string, string | number | boolean>;
 
@@ -33,7 +42,7 @@ function locationOf(el: Element): string {
 }
 
 function classify(link: HTMLAnchorElement, href: string): string {
-  if (href.includes("sympla.com.br")) return "checkout_click";
+  if (href.includes(CHECKOUT_HOST)) return "checkout_click";
   if (href.includes("wa.me") || href.startsWith("https://api.whatsapp.com")) return "whatsapp_click";
   // Âncora interna só conta como CTA quando é botão; link de menu não vira evento.
   if (href.startsWith("#")) return link.classList.contains("btn") ? "cta_click" : "";
@@ -87,5 +96,36 @@ function initScrollDepth() {
   onScroll();
 }
 
+/**
+ * Repassa as UTMs da LP para os links do checkout.
+ *
+ * Sem isso a origem morre na página: o Sympla recebe a visita sem parâmetro e o
+ * relatório de vendas dele não sabe de qual campanha veio a inscrição. Como a compra
+ * acontece fora do alcance do pixel, esse repasse é a única ligação entre anúncio e
+ * inscrição real.
+ *
+ * Parâmetro que já exista no link do checkout é preservado, não sobrescrito.
+ */
+function forwardParamsToCheckout() {
+  const incoming = new URLSearchParams(window.location.search);
+  const carry: [string, string][] = [];
+
+  incoming.forEach((value, key) => {
+    if (!value) return;
+    if (key.startsWith("utm_") || FORWARD_PARAMS.includes(key)) carry.push([key, value]);
+  });
+
+  if (!carry.length) return;
+
+  document.querySelectorAll<HTMLAnchorElement>(`a[href*="${CHECKOUT_HOST}"]`).forEach((link) => {
+    const url = new URL(link.href);
+    for (const [key, value] of carry) {
+      if (!url.searchParams.has(key)) url.searchParams.set(key, value);
+    }
+    link.href = url.toString();
+  });
+}
+
 initClicks();
 initScrollDepth();
+forwardParamsToCheckout();
